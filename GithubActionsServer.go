@@ -13,7 +13,7 @@ func main() {
 
 	http.HandleFunc("/test_two", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Saying test two")
-		fmt.Fprintf(w, "Test Two Again")
+		fmt.Fprintf(w, "Test Two ")
 	})
 
 	http.HandleFunc("/test_three", func(w http.ResponseWriter, r *http.Request) {
