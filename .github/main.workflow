@@ -36,7 +36,7 @@ action "Get Gcloud Auth" {
   uses = "actions/gcloud/cli@df59b3263b6597df4053a74e4e4376c045d9087e"
   needs = ["Docker Tag"]
   secrets = ["GCLOUD_AUTH"]
-  args = "[\"auth\", \"configure-docker\", \"--quiet\"]"
+  args = ["auth", "configure-docker", "--quiet"]
 }
 
 action "Push Image to Registery" {
