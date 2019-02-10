@@ -13,3 +13,4 @@ echo "#### ---- Resetting the deployment image ---- ####"
 kubectl -n deployment set image deployment/githubactions githubactions-sha256=gcr.io/nirajfonseka-prod/githubactions:latest
 
 kubectl -n deployment set image deployment/githubactions githubactions-sha256=gcr.io/nirajfonseka-prod/githubactions
+    
