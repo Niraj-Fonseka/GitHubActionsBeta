@@ -8,7 +8,7 @@ workflow "New workflow" {
 
 action "GitHub Action for Docker" {
   uses = "actions/docker/cli@aea64bb1b97c42fa69b90523667fef56b90d7cff"
-  args = ["build", "-t" , "githubactions", "."]
+  args = ["build", "-t", "githubactions", "."]
 }
 
 action "Get Auth for Google Cloud" {
@@ -24,4 +24,10 @@ action "Docker Tag" {
     APP = "githubactions"
   }
   args = ["githubactions", "gcr.io/$PROJECT/$APP"]
+}
+
+
+action "Setup Google Cloud" {
+  uses = "actions/gcloud/auth@master"
+  secrets = ["GCLOUD_AUTH"]
 }
