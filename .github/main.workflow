@@ -2,7 +2,7 @@ workflow "New workflow" {
   on = "push"
   resolves = [
     "GitHub Action for Docker",
-    "Push Image to Registery",
+    "Set the new image in GKE",
   ]
 }
 
@@ -39,12 +39,25 @@ action "Get Gcloud Auth" {
   args = ["auth", "configure-docker", "--quiet"]
 }
 
-action "Push Image to Registery" {
+action "Get Kubernates Auth" {
   uses = "actions/gcloud/cli@df59b3263b6597df4053a74e4e4376c045d9087e"
-  args = ["docker", "-- push" , "gcr.io/$PROJECT/$APP:latest"]
+  needs = ["Get Gcloud Auth"]
+  secrets = ["GCLOUD_AUTH"]
+  env = {
+    PROJECT = "nirajfonseka-prod"
+    CLUSTER_NAME = "gke-test-cluster"
+  }
+  args = "container clusters get-credentials $CLUSTER_NAME --zone us-central1-a --project $PROJECT"
+}
+
+action "Set the new image in GKE" {
+  uses = "docker://gcr.io/cloud-builders/kubectl"
+  needs = ["Get Kubernates Auth"]
   env = {
     PROJECT = "nirajfonseka-prod"
     APP = "githubactions"
+    DEPLOYMENT = "githubactions"
+    NAMESPACE = "githubactions-sha256"
   }
-  needs = ["Get Gcloud Auth"]
-}
+  args = ["kubectl", "-n deployment" , "set image deployment/$APP $IMAGENAME=gcr.io/$PROJECT/$APP"]
+  }
