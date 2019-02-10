@@ -29,5 +29,6 @@ action "Docker Tag" {
 
 action "Setup Google Cloud" {
   uses = "actions/gcloud/auth@master"
+  needs = ["Docker Tag", "Get Auth for Google Cloud"]
   secrets = ["GCLOUD_AUTH"]
 }
