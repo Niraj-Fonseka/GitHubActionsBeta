@@ -2,6 +2,7 @@ workflow "New workflow" {
   on = "push"
   resolves = [
     "GitHub Action for Docker",
+    "Push Image to Registery",
   ]
 }
 
@@ -40,12 +41,10 @@ action "Get Gcloud Auth" {
 
 action "Push Image to Registery" {
   uses = "actions/gcloud/cli@df59b3263b6597df4053a74e4e4376c045d9087e"
-  args = ["docker", "-- push", "gcr.io/$PROJECT/$APP:latest"]
+  args = ["docker", "-- push" , "gcr.io/$PROJECT/$APP:latest"]
   env = {
     PROJECT = "nirajfonseka-prod"
     APP = "githubactions"
   }
   needs = ["Get Gcloud Auth"]
 }
-
-
