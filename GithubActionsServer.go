@@ -31,6 +31,11 @@ func main() {
 		fmt.Fprintf(w, "Test Five")
 	})
 
+	http.HandleFunc("/test_five_test", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("Saying test two")
+		fmt.Fprintf(w, "Test Five test")
+	})
+
 	fmt.Println("Running App : ")
 	http.ListenAndServe(":8080", nil)
 }
