@@ -54,10 +54,10 @@ action "Set the new image in GKE" {
   uses = "docker://gcr.io/cloud-builders/kubectl"
   needs = ["Get Kubernates Auth"]
   env = {
-    PROJECT = "nirajfonseka-prod"
-    APP = "githubactions"
-    DEPLOYMENT = "githubactions"
-    NAMESPACE = "githubactions-sha256"
+    PROJECT_ID = "nirajfonseka-prod"
+    APPLICATION_NAME = "githubactions"
   }
-  args = ["-n deployment" , "set image deployment/$APP $IMAGENAME=gcr.io/$PROJECT/$APP"]
-  }
+  runs = "sh -l -c"
+  args = ["SHORT_REF=$(echo ${GITHUB_SHA} | head -c7) && cat $GITHUB_WORKSPACE/deploy.yml | sed 's/PROJECT_ID/'\"$PROJECT_ID\"'/' | sed 's/APPLICATION_NAME/'\"$APPLICATION_NAME\"'/' | sed 's/TAG/'\"$SHORT_REF\"'/' | kubectl apply -f - "]
+}
+  
