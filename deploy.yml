@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: githubactions-sha256
-        image: gcr.io/PROJECT/APPLICATION_NAME:latest
+        image: gcr.io/PROJECT_ID/APPLICATION_NAME:latest
         ports:
         - containerPort: 8080
         resources:
