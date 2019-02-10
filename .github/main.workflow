@@ -49,16 +49,4 @@ action "Push Image to Registery" {
   needs = ["Get Gcloud Auth"]
 }
 
-action "Set the new image " {
-  uses = "docker://gcr.io/cloud-builders/kubectl"
-  needs = ["Push Image to Registery"]
-  secrets = ["GCLOUD_AUTH"]
-  env = {
-    PROJECT = "nirajfonseka-prod"
-    APP = "githubactions"
-    DEPLOYMENT = "githubactions"
-    NAMESPACE = "deployment"
-    IMAGENAME = "githubactions-sha256"
-  }
-  args = ["kubectl", "-n deployment" , "set image deployment/$APP $IMAGENAME=gcr.io/$PROJECT/$APP"]
-  }
+
