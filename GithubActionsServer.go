@@ -22,7 +22,7 @@ func main() {
 	})
 
 	http.HandleFunc("/test_four", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Saying test two")
+		fmt.Println("Saying test two !!!!")
 		fmt.Fprintf(w, "Test Four")
 	})
 
