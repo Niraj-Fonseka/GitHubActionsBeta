@@ -26,6 +26,8 @@ action "Docker Tag" {
   args = ["githubactions", "gcr.io/$PROJECT/$APP"]
 }
 
+
+
 action "Setup Google Cloud" {
   uses = "actions/gcloud/auth@master"
   needs = ["Docker Tag", "Get Auth for Google Cloud"]
@@ -39,9 +41,19 @@ action "Get Gcloud Auth" {
   args = ["auth", "configure-docker", "--quiet"]
 }
 
+action "Push Image to Registery" {
+  uses = "actions/gcloud/cli@df59b3263b6597df4053a74e4e4376c045d9087e"
+  args = ["docker", "-- push", "gcr.io/$PROJECT/$APP:latest"]
+  env = {
+    PROJECT = "nirajfonseka-prod"
+    APP = "githubactions"
+  }
+  needs = ["Get Gcloud Auth"]
+}
+
 action "Get Kubernates Auth" {
   uses = "actions/gcloud/cli@df59b3263b6597df4053a74e4e4376c045d9087e"
-  needs = ["Get Gcloud Auth"]
+  needs = ["Push Image to Registery"]
   secrets = ["GCLOUD_AUTH"]
   env = {
     PROJECT = "nirajfonseka-prod"
