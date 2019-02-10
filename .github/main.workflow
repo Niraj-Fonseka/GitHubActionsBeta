@@ -59,5 +59,5 @@ action "Set the new image in GKE" {
     DEPLOYMENT = "githubactions"
     NAMESPACE = "githubactions-sha256"
   }
-  args = ["kubectl", "-n deployment" , "set image deployment/$APP $IMAGENAME=gcr.io/$PROJECT/$APP"]
+  args = ["-n deployment" , "set image deployment/$APP $IMAGENAME=gcr.io/$PROJECT/$APP"]
   }
