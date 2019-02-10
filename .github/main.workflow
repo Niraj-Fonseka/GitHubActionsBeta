@@ -60,6 +60,5 @@ action "Set the new image " {
     NAMESPACE = "deployment"
     IMAGENAME = "githubactions-sha256"
   }
-  runs = "kubectl"
-  args = "-n $NAMESPACE set image $NAMESPACE/$APP $IMAGENAME=gcr.io/$PROJECT/$APP"
-}
+  args = ["kubectl", "-n deployment" , "set image deployment/$APP $IMAGENAME=gcr.io/$PROJECT/$APP"]
+  }
