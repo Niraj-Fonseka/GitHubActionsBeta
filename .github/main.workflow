@@ -23,5 +23,5 @@ action "Docker Tag" {
     PROJECT = "nirajfonseka-prod"
     APP = "githubactions"
   }
-  args = "gcloud-example-app", "gcr.io/$PROJECT_ID/$APPLICATION_NAME"
+  args = ["gcloud-example-app", "gcr.io/$PROJECT_ID/$APPLICATION_NAME"]
 }
