@@ -11,11 +11,6 @@ func main() {
 		fmt.Fprintf(w, "HelloWorld")
 	})
 
-	http.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Saying test ")
-		fmt.Fprintf(w, "Test Endpoint again and again")
-	})
-
 	http.HandleFunc("/test_two", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Saying test two")
 		fmt.Fprintf(w, "Test Endpoint Two")
