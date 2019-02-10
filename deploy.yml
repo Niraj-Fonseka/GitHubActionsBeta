@@ -3,6 +3,7 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: githubactions
+  namespace: deployment
 spec:
   replicas: 1
   strategy:
