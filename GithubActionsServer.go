@@ -18,7 +18,7 @@ func main() {
 	})
 
 	http.HandleFunc("/time", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Saying Hello world")
+		fmt.Println("Showing Time")
 		fmt.Fprintf(w, time.Now().UTC().String())
 	})
 
