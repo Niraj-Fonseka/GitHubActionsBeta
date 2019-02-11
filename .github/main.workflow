@@ -1,10 +1,14 @@
 workflow "Deploy" {
   on = "push"
   resolves = [
-    "GitHub Action for Slack",
-    "Build docker image ",
-    "Notify Starting Deployment",
+    "Update Deployment",
   ]
+}
+
+action "Notify Starting Deployment" {
+  uses = "Ilshidur/action-slack@6286a077a2b77159fcc4f425a9e714173d374616"
+  secrets = ["SLACK_WEBHOOK"]
+  args = "*Starting New Deployment*"
 }
 
 action "Build docker image " {
@@ -86,8 +90,4 @@ action "GitHub Action for Slack" {
   needs = ["Update Deployment"]
 }
 
-action "Notify Starting Deployment" {
-  uses = "Ilshidur/action-slack@6286a077a2b77159fcc4f425a9e714173d374616"
-  secrets = ["SLACK_WEBHOOK"]
-  args = "*Starting New Deployment*"
-}
+
