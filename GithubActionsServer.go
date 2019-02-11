@@ -22,6 +22,6 @@ func main() {
 		fmt.Fprintf(w, time.Now().UTC().String())
 	})
 
-	fmt.Println("Running App : ")
+	fmt.Println("Running App : 8080")
 	http.ListenAndServe(":8080", nil)
 }
