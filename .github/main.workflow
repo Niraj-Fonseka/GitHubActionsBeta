@@ -11,6 +11,7 @@ action "GitHub Action for Docker" {
   args = ["build", "-t", "githubactions", "."]
 }
 
+
 action "Get Auth for Google Cloud" {
   uses = "actions/gcloud/auth@df59b3263b6597df4053a74e4e4376c045d9087e"
   secrets = ["GCLOUD_AUTH"]
