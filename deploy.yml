@@ -1,0 +1,40 @@
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: githubactions
+  namespace: deployment
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5 
+  template:
+    metadata:
+      labels:
+        app: githubactions
+    spec:
+      containers:
+      - name: githubactions-sha256
+        image: gcr.io/PROJECT_ID/APPLICATION_NAME:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            cpu: 100m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: githubactions-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: githubactions
