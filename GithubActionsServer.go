@@ -13,7 +13,7 @@ func main() {
 	})
 
 	http.HandleFunc("/hi", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Saying Hello world")
+		fmt.Println("Saying hi")
 		fmt.Fprintf(w, "try /hello")
 	})
 
