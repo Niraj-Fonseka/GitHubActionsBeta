@@ -21,11 +21,8 @@ action "Tag Docker for gcloud" {
     "Get Auth for Google Cloud",
     "Build docker image ",
   ]
-  env = {
-    PROJECT = "nirajfonseka-prod"
-    APP = "githubactions"
-  }
   args = ["githubactions", "gcr.io/$PROJECT/$APP"]
+  secrets = ["PROJECT", "APP"]
 }
 
 action "Setup Google Cloud" {
@@ -47,34 +44,27 @@ action "Get Gcloud Auth" {
 action "Push Image to Registery" {
   uses = "actions/gcloud/cli@df59b3263b6597df4053a74e4e4376c045d9087e"
   args = ["docker", "-- push", "gcr.io/$PROJECT/$APP"]
-  env = {
-    PROJECT = "nirajfonseka-prod"
-    APP = "githubactions"
-  }
   needs = ["Get Gcloud Auth"]
+  secrets = ["PROJECT", "APP"]
 }
 
 action "Get K8s Auth" {
   uses = "actions/gcloud/cli@df59b3263b6597df4053a74e4e4376c045d9087e"
   needs = ["Push Image to Registery"]
-  secrets = ["GCLOUD_AUTH"]
-  env = {
-    PROJECT = "nirajfonseka-prod"
-    CLUSTER_NAME = "gke-test-cluster"
-  }
+  secrets = [
+    "GCLOUD_AUTH",
+    "PROJECT",
+    "CLUSTER_NAME",
+  ]
   args = "container clusters get-credentials $CLUSTER_NAME --zone us-central1-a --project $PROJECT"
 }
 
 action "Update Deployment" {
   uses = "docker://gcr.io/cloud-builders/kubectl"
-  env = {
-    PROJECT_ID = "nirajfonseka-prod"
-    APPLICATION_NAME = "githubactions"
-    NAMESPACE = "deployment"
-  }
   runs = "sh -l -c"
   args = ["SHORT_REF=$(echo ${GITHUB_SHA} | head -c7) && cat $GITHUB_WORKSPACE/deploy.yml | sed 's/PROJECT_ID/'\"$PROJECT_ID\"'/' | sed 's/APPLICATION_NAME/'\"$APPLICATION_NAME\"'/' | sed 's/TAG/'\"$SHORT_REF\"'/' | kubectl apply -n $NAMESPACE -f -"]
   needs = ["Get K8s Auth"]
+  secrets = ["NAMESPACE", "PROJECT_ID", "APPLICATION_NAME"]
 }
 
 action "GitHub Action for Slack" {
@@ -83,4 +73,3 @@ action "GitHub Action for Slack" {
   args = "*Deployment Successful*"
   needs = ["Update Deployment"]
 }
-
